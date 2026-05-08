@@ -1,0 +1,20 @@
+<%- include('partials-header', { title, isCreator }) %>
+<section class="auth-panel">
+  <div class="auth-copy">
+    <p class="eyebrow">Creator-only area</p>
+    <h1>Login to upload photo content.</h1>
+    <p>This simple role gate models a creator account without public enrolment. For a production version, this can be replaced with Azure App Service Authentication or Microsoft Entra ID.</p>
+  </div>
+  <form class="form-card" method="post" action="/creator/login">
+    <% if (error) { %><div class="error"><%= error %></div><% } %>
+    <label>Creator display name
+      <input type="text" name="creatorName" placeholder="e.g., Fatima" required>
+    </label>
+    <label>Creator access code
+      <input type="password" name="creatorCode" placeholder="Enter access code" required>
+    </label>
+    <button class="primary-button" type="submit">Enter Creator Dashboard</button>
+    <p class="hint">The creator access code is configured securely through the hosting environment.</p>
+  </form>
+</section>
+<%- include('partials-footer') %>

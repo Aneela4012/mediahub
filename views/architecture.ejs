@@ -1,0 +1,33 @@
+<%- include('partials-header', { title, isCreator }) %>
+<section class="hero compact">
+  <div>
+    <p class="eyebrow">Deployment and scalability</p>
+    <h1>Cloud-native architecture map</h1>
+    <p class="hero-copy">This page summarises the deployment, data flow, storage layer, and monitoring design used by the live application.</p>
+  </div>
+  <aside class="hero-card">
+    <strong>Current data mode</strong>
+    <p><%= mode.database %></p><p><%= mode.storage %></p>
+    <strong>Application Insights</strong>
+    <p><%= appInsights ? 'Enabled' : 'Not enabled / no connection string detected' %></p>
+  </aside>
+</section>
+
+<section class="architecture-flow">
+  <div class="flow-card"><span>1</span><strong>GitHub Repository</strong><small>Source control and deployment trigger</small></div>
+  <div class="flow-card"><span>2</span><strong>Azure App Service</strong><small>Hosted Node.js web app and REST API</small></div>
+  <div class="flow-card"><span>3</span><strong>REST Routes</strong><small>Creator upload, consumer search, comments, ratings</small></div>
+  <div class="flow-card"><span>4</span><strong>Cosmos DB</strong><small>Metadata, comments, ratings containers</small></div>
+  <div class="flow-card"><span>5</span><strong>Blob Storage</strong><small>Uploaded image objects with SAS display URLs</small></div>
+  <div class="flow-card"><span>6</span><strong>Application Insights</strong><small>Requests, failures, response time, monitoring</small></div>
+</section>
+
+<section class="panel">
+  <h2>Backend API endpoints</h2>
+  <ul class="check-list">
+    <li><a href="/health">/health</a> — deployment health and cloud-mode check</li>
+    <li><a href="/api/images">/api/images</a> — image metadata JSON from the backend</li>
+    <li><code>/api/images/:id</code> — image detail, comments, and rating statistics</li>
+  </ul>
+</section>
+<%- include('partials-footer') %>

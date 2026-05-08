@@ -1,0 +1,53 @@
+<%- include('partials-header', { title, isCreator }) %>
+<section class="section-heading">
+  <div>
+    <p class="eyebrow">Creator dashboard</p>
+    <h1>Upload image content with metadata.</h1>
+    <p class="muted">Logged in as <strong><%= creatorName %></strong>. Uploaded media is stored in Blob Storage and metadata is stored in Cosmos DB when Azure environment variables are configured.</p>
+  </div>
+</section>
+
+<% if (success) { %><div class="notice"><%= success %></div><% } %>
+<% if (error) { %><div class="error"><%= error %></div><% } %>
+
+<section class="creator-layout">
+  <form class="form-card upload-form" method="post" action="/creator/upload" enctype="multipart/form-data">
+    <h2>New photo upload</h2>
+    <label>Image file
+      <input type="file" name="image" accept="image/*" required>
+    </label>
+    <label>Title
+      <input type="text" name="title" maxlength="120" placeholder="Image title" required>
+    </label>
+    <label>Caption
+      <textarea name="caption" rows="4" maxlength="500" placeholder="Describe the image" required></textarea>
+    </label>
+    <label>Location
+      <input type="text" name="location" maxlength="120" placeholder="e.g., London, UK">
+    </label>
+    <label>People present
+      <input type="text" name="people" maxlength="200" placeholder="e.g., Alice, Bob">
+    </label>
+    <button class="primary-button" type="submit">Publish photo</button>
+  </form>
+
+  <div class="panel">
+    <h2>Recently uploaded</h2>
+    <% if (images.length === 0) { %>
+      <p class="muted">No uploaded images yet.</p>
+    <% } else { %>
+      <div class="mini-list">
+        <% images.slice(0, 6).forEach((image) => { %>
+          <a class="mini-item" href="/image/<%= image.id %>">
+            <img src="<%= image.imageUrl %>" alt="<%= image.title %>">
+            <span>
+              <strong><%= image.title %></strong>
+              <small><%= image.location || 'No location' %></small>
+            </span>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+<%- include('partials-footer') %>

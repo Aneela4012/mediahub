@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | MediaHub Cloud</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">M</span>
+      <span>
+        <strong>MediaHub Cloud</strong>
+        <small>Scalable photo sharing web app</small>
+      </span>
+    </a>
+    <nav>
+      <a href="/">Consumer View</a>
+      <a href="/architecture">Architecture</a>
+      <% if (isCreator) { %>
+        <a href="/creator">Creator Dashboard</a>
+        <form class="inline" method="post" action="/creator/logout"><button class="link-button">Logout</button></form>
+      <% } else { %>
+        <a class="nav-cta" href="/creator/login">Creator Login</a>
+      <% } %>
+    </nav>
+  </header>
+  <main class="page-shell">

@@ -1,0 +1,60 @@
+<%- include('partials-header', { title, isCreator }) %>
+<section class="hero">
+  <div>
+    <p class="eyebrow">Consumer media distribution view</p>
+    <h1>Search, view, comment, and rate shared photos.</h1>
+    <p class="hero-copy">A cloud-native photo sharing platform with REST-backed content, scalable metadata storage, and object storage for uploaded media.</p>
+    <form class="search-row" method="get" action="/">
+      <input type="search" name="q" placeholder="Search by title, caption, location, people, or creator..." value="<%= q %>">
+      <button>Search</button>
+    </form>
+  </div>
+  <aside class="hero-card">
+    <strong>Platform capabilities</strong>
+    <ul>
+      <li>Creator uploads</li>
+      <li>Cloud media storage</li>
+      <li>Scalable metadata records</li>
+      <li>Consumer comments and ratings</li>
+      <li>Monitoring-ready deployment</li>
+    </ul>
+  </aside>
+</section>
+
+<% if (message) { %><div class="notice"><%= message %></div><% } %>
+
+<section class="section-heading">
+  <div>
+    <p class="eyebrow">Gallery</p>
+    <h2><%= images.length %> photo<%= images.length === 1 ? '' : 's' %> available</h2>
+  </div>
+  <a class="secondary-button" href="/creator">Upload as creator</a>
+</section>
+
+<% if (images.length === 0) { %>
+  <div class="empty-state">
+    <h3>No images yet.</h3>
+    <p>Use the creator dashboard to upload the first photo with metadata.</p>
+    <a class="primary-button" href="/creator">Open Creator Dashboard</a>
+  </div>
+<% } else { %>
+  <div class="gallery-grid">
+    <% images.forEach((image) => { %>
+      <article class="media-card">
+        <a href="/image/<%= image.id %>">
+          <img src="<%= image.imageUrl %>" alt="<%= image.title %>">
+        </a>
+        <div class="media-card-body">
+          <h3><a href="/image/<%= image.id %>"><%= image.title %></a></h3>
+          <p><%= image.caption %></p>
+          <div class="meta-row">
+            <span><%= image.location || 'No location' %></span>
+            <span><%= new Date(image.createdAt).toLocaleDateString() %></span>
+          </div>
+          <% if (image.people) { %><p class="people">People: <%= image.people %></p><% } %>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+<%- include('partials-footer') %>
